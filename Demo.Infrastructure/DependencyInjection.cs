@@ -14,8 +14,6 @@ namespace Demo.Infrastructure
         public static void AddInfrustructure(this IServiceCollection services, IConfiguration configuration)
         {
 
-           
-
             services.Configure<JwtSettings>(configuration.GetSection(JwtSettings.SectionName));
 
             services.AddSingleton<IJwtTokenGenerator, JwtTokenGenerator>();
