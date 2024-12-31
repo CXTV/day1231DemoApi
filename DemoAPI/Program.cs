@@ -1,6 +1,8 @@
-
+using Demo.Application;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddApplication();
 
 // Add services to the container.
 builder.Services.AddControllers();
