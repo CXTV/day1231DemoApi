@@ -1,15 +1,20 @@
-﻿using Demo.Application.Common.Interfaces;
+﻿using Demo.Application.Common.Interfaces.Authentication;
+using Demo.Application.Common.Interfaces.Services;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Demo.Infrastructure.Authentication
 {
     public class JwtTokenGenerator : IJwtTokenGenerator
     {
+        private readonly IDateTimeProvider _dateTimeProvider;
+        public JwtTokenGenerator(IDateTimeProvider _dateTimeProvider)
+        {
+            this._dateTimeProvider = _dateTimeProvider;
+        }
+
         public string GenerateToken(Guid userId, string firstName, string lastName)
         {
             var key = "your-very-long-secret-key-that-is-at-least-32-characters-long";
@@ -24,7 +29,7 @@ namespace Demo.Infrastructure.Authentication
 
             var securityToken = new JwtSecurityToken(
                 issuer: "DemoAPI",
-                expires: DateTime.UtcNow.AddHours(1),
+                expires: _dateTimeProvider.UtcNow.AddHours(1),
                 claims:claims,
                 signingCredentials: signingCredentials);
 

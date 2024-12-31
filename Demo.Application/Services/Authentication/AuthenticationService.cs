@@ -1,5 +1,4 @@
-﻿
-using Demo.Application.Common.Interfaces;
+﻿using Demo.Application.Common.Interfaces.Authentication;
 
 namespace Demo.Application.Services.Authentication
 {

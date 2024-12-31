@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Demo.Application.Common.Interfaces
+namespace Demo.Application.Common.Interfaces.Authentication
 {
     public interface IJwtTokenGenerator
     {
-        string GenerateToken(Guid userId, string firstName,string lastName);
+        string GenerateToken(Guid userId, string firstName, string lastName);
     }
 }
