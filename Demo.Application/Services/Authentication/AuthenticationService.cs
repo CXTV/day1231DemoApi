@@ -6,7 +6,6 @@ namespace Demo.Application.Services.Authentication
 {
     public class AuthenticationService : IAuthenticationService
     {
-
         private readonly IJwtTokenGenerator _jwtTokenGenerator;
         private readonly IUserRepository _userRepository;
 
@@ -24,15 +23,11 @@ namespace Demo.Application.Services.Authentication
             {
                 throw new Exception("User already exists");
             }
-
             //2.创建用户
             var user = new User { FirstName = firstName,LastName = lastName, Email =email,Password = password};
-
             _userRepository.AddUser(user);
             //3.生成token
             var token = _jwtTokenGenerator.GenerateToken(user);
-
-
             return new AuthenticationResult(user, token);
         }
 

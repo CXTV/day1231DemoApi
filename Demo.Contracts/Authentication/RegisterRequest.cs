@@ -12,5 +12,4 @@ namespace Demo.Contracts.Authentication
         string LastName,
         string Email,
         string Password);
-
 }
