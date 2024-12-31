@@ -1,4 +1,5 @@
 ﻿
+//返回给客户端的身份验证响应
 namespace Demo.Contracts.Authentication
 {
     public record AuthenticationResponse(
@@ -7,5 +8,4 @@ namespace Demo.Contracts.Authentication
         string LastName,
         string Email,
         string Token);
-
 }

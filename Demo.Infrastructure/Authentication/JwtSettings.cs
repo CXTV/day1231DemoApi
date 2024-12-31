@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
+//JWT设置
 namespace Demo.Infrastructure.Authentication
 {
     public class JwtSettings

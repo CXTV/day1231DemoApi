@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Demo.Contracts.Authentication
 {
+    //注册请求
     public record RegisterRequest(
         string FirstName,
         string LastName,
