@@ -4,7 +4,7 @@ using Demo.Infrastructure;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddApplication();
-builder.Services.AddInfrustructure();
+builder.Services.AddInfrustructure(builder.Configuration);
 
 // Add services to the container.
 builder.Services.AddControllers();
