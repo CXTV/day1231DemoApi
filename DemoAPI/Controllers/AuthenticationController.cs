@@ -1,5 +1,9 @@
-﻿using Demo.Application.Services.Authentication;
+﻿using Demo.Application.Authentication.Commands.Register;
+using Demo.Application.Authentication.Queries.Login;
+using Demo.Application.Authentication;
 using Demo.Contracts.Authentication;
+using MediatR;
+using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DemoAPI.Controllers
@@ -8,43 +12,30 @@ namespace DemoAPI.Controllers
     [Route("auth")]
     public class AuthenticationController:ControllerBase
     {
-        private readonly IAuthenticationService _authenticationService;
+        private readonly ISender _mediator;
 
-        public AuthenticationController(IAuthenticationService authenticationService)
+        public AuthenticationController(ISender mediator)
         {
-            _authenticationService = authenticationService;
-        }   
+            this._mediator = mediator;
+        }
 
         [HttpPost("register")]
-        public IActionResult Register(RegisterRequest request)
+        public async Task<IActionResult> Register(RegisterCommand command)
         {
-            var authResult = _authenticationService.Register(request.FirstName, request.LastName,request.Email,request.Password);
-            
-            var response = new AuthenticationResponse(
-                authResult.User.Id,
-                authResult.User.FirstName,
-                authResult.User.LastName,
-                authResult.User.Email,
-                authResult.Token
-            );
+            var result = await _mediator.Send(command);
 
-            return Ok(response);
+            HttpContext.Response.Headers.Add("Authorization", $"Bearer {result.Token}");
+
+            return Ok(new { Message = "User registered successfully",  result.Token });
         }
 
         [HttpPost("login")]
-        public IActionResult Login(LoginRequest request)
+        public async Task<IActionResult> Login(LoginQuery query)
         {
-            var authResult = _authenticationService.Login(request.Email, request.Password);
+            var result = await _mediator.Send(query);
+            HttpContext.Response.Headers.Add("Authorization", $"Bearer {result.Token}");
 
-            var response = new AuthenticationResponse(
-                authResult.User.Id,
-                authResult.User.FirstName,
-                authResult.User.LastName,
-                authResult.User.Email,
-                authResult.Token
-            );
-
-            return Ok(response);
+            return Ok(new { Message = "User login successfully",result.Token });
         }
 
     }
